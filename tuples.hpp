@@ -1,15 +1,25 @@
-class Tuple {
+class BaseTuple {
+	public:
+		BaseTuple();
+		BaseTuple(double a, double b, double c, double d);
+		
+		bool operator==(const BaseTuple& rhs) const;
+		BaseTuple operator+(const BaseTuple& rhs) const;
+		BaseTuple operator-(const BaseTuple& rhs) const;
+		BaseTuple operator-() const;
+		BaseTuple operator*(double scalar) const;
+		BaseTuple operator/(double scalar) const;
+		double operator[](int index) const;
+		
+	protected:
+		double a[4];
+};
+
+class Tuple : public BaseTuple {
   public:
     Tuple();
     Tuple(double x, double y, double z, double w);
 		
-		bool operator==(const Tuple& rhs) const;
-		Tuple operator+(const Tuple& rhs) const;
-		Tuple operator-(const Tuple& rhs) const;
-		Tuple operator-() const;
-		Tuple operator*(double scalar) const;
-		Tuple operator/(double scalar) const;
-    
     double getX();
     double getY();
     double getZ();
@@ -22,11 +32,6 @@ class Tuple {
     
     bool isPoint();
     bool isVector();
-  private:
-    double x;
-    double y;
-    double z;
-    double w;
 };
 
 class Point : public Tuple {

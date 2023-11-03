@@ -8,96 +8,112 @@ bool compareDouble(double a, double b) {
 	return abs(a - b) < EPSILON;
 }
 
-Tuple::Tuple() : x(0.0), y(0.0), z(0.0), w(0.0) {}
+BaseTuple::BaseTuple() : a{0.0, 0.0, 0.0, 0.0} {}
 
-Tuple::Tuple(double x, double y, double z, double w)
-  : x(x), y(y), z(z), w(w) {}
+BaseTuple::BaseTuple(double a, double b, double c, double d)
+  : a{a, b, c, d} {}
 	
-bool Tuple::operator==(const Tuple& rhs) const {
-	return compareDouble(x, rhs.x)
-		&& compareDouble(y, rhs.y)
-		&& compareDouble(z, rhs.z)
-		&& compareDouble(w, rhs.w);
+double BaseTuple::operator[](int index) const {
+	return a[index];
+}
+	
+bool BaseTuple::operator==(const BaseTuple& rhs) const {
+	return compareDouble(a[0], rhs[0])
+		&& compareDouble(a[1], rhs[1])
+		&& compareDouble(a[2], rhs[2])
+		&& compareDouble(a[3], rhs[3]);
 }
 
-Tuple Tuple::operator+(const Tuple& rhs) const {
-	return Tuple(x + rhs.x,
-		y + rhs.y,
-		z + rhs.z,
-		w + rhs.w);
+BaseTuple BaseTuple::operator+(const BaseTuple& rhs) const {
+	return Tuple(a[0] + rhs[0],
+		a[1] + rhs[1],
+		a[2] + rhs[2],
+		a[3] + rhs[3]);
 }
 
-Tuple Tuple::operator-(const Tuple& rhs) const {
-	return Tuple(x - rhs.x,
-		y - rhs.y,
-		z - rhs.z,
-		w - rhs.w);
+BaseTuple BaseTuple::operator-(const BaseTuple& rhs) const {
+	return Tuple(a[0] - rhs[0],
+		a[1] - rhs[1],
+		a[2] - rhs[2],
+		a[3] - rhs[3]);
 }
 
-Tuple Tuple::operator-() const {
-	Tuple zero;
+BaseTuple BaseTuple::operator-() const {
+	BaseTuple zero;
 	return zero - *this;
 }
 
-Tuple Tuple::operator*(double scalar) const {
-	return Tuple(x * scalar,
-		y * scalar,
-		z * scalar,
-		w * scalar);
+BaseTuple BaseTuple::operator*(double scalar) const {
+	return Tuple(a[0] * scalar,
+		a[1] * scalar,
+		a[2] * scalar,
+		a[3] * scalar);
 }
 
-Tuple Tuple::operator/(double scalar) const {
-	return Tuple(x / scalar,
-		y / scalar,
-		z / scalar,
-		w / scalar);
-	}
+BaseTuple BaseTuple::operator/(double scalar) const {
+	return Tuple(a[0] / scalar,
+		a[1] / scalar,
+		a[2] / scalar,
+		a[3] / scalar);
+}
+	
+Tuple::Tuple() : BaseTuple(0.0, 0.0, 0.0, 0.0) {}
+
+Tuple::Tuple(double x, double y, double z, double w)
+: BaseTuple(x, y, z, w) {}
 
 double Tuple::getX() {
-  return x;
+  return a[0];
 }
 
 double Tuple::getY() {
-  return y;
+  return a[1];
 }
 
 double Tuple::getZ() {
-  return z;
+  return a[2];
 }
 
 double Tuple::getW() {
-  return w;
+  return a[3];
 }
 
 double Tuple::magnitude() {
-	return sqrt(x*x + y*y + z*z + w*w);
+	return sqrt(a[0] * a[0] 
+		+ a[1] * a[1] 
+		+ a[2] * a[2] 
+		+ a[3] * a[3]);
 }
 
 Tuple Tuple::normalize() {
-	return *this / magnitude();
+	auto m = magnitude();
+	return Tuple(getX() / m,
+		getY() / m,
+		getZ() / m,
+		getW() / m);
 }
 
 double Tuple::dot(const Tuple& rhs) {
-	return x * rhs.x
-		+ y * rhs.y
-		+ z * rhs.z
-		+ w * rhs.w;
+	return a[0] * rhs[0]
+		+ a[1] * rhs[1]
+		+ a[2] * rhs[2]
+		+ a[3] * rhs[3];
 }
 
 Tuple Tuple::cross(const Tuple& b) {
 	return Tuple(
-		y * b.z - z * b.y,
-		z * b.x - x * b.z,
-		x * b.y - y * b.x,
+		a[1] * b[2] - a[2] * b[1],
+		a[2] * b[0] - a[0] * b[2],
+		a[0] * b[1] - a[1] * b[0],
 		0.0);
 }
 
 bool Tuple::isVector() {
-	return w == 0.0;
+	return a[3] == 0.0;
 }
 
 bool Tuple::isPoint() {
-	return w == 1.0;
+	return a[3] == 1.0;
 }
 
 Point::Point() : Tuple(0.0, 0.0, 0.0, 1.0) {}
