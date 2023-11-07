@@ -45,3 +45,15 @@ class Vector : public Tuple {
 		Vector();
 		Vector(double x, double y, double z);
 };
+
+class Color : public BaseTuple {
+	public:
+    Color();
+    Color(double red, double green, double blue);
+		
+		double getRed();
+    double getGreen();
+    double getBlue();
+		
+		Color operator*(Color& rhs);
+};

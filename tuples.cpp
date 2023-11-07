@@ -125,3 +125,26 @@ Vector::Vector() : Tuple(0.0, 0.0, 0.0, 0.0) {}
 
 Vector::Vector(double x, double y, double z)
 : Tuple(x, y, z, 0.0) {}
+
+Color::Color() : BaseTuple(0.0, 0.0, 0.0, 0.0) {}
+
+Color::Color(double red, double green, double blue)
+: BaseTuple(red, green, blue, 0.0) {}
+
+double Color::getRed() {
+  return a[0];
+}
+
+double Color::getGreen() {
+  return a[1];
+}
+
+double Color::getBlue() {
+  return a[2];
+}
+
+Color Color::operator*(Color& rhs) {
+	return Color(getRed() * rhs.getRed(),
+		getGreen() * rhs.getGreen(),
+		getBlue() * rhs.getBlue());
+}

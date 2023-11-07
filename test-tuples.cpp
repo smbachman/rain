@@ -139,3 +139,38 @@ TEST_CASE("The cross product of two vectors", "[tuples]") {
   REQUIRE( a.cross(b) == Vector(-1, 2, -1) );
 	REQUIRE( b.cross(a) == Vector(1, -2, 1) );
 }
+
+TEST_CASE("Colors are (red, green, blue) tuples", "[tuples]") {
+  Color c(-0.5,0.4,1.7);
+  REQUIRE( c.getRed() == -0.5 );
+  REQUIRE( c.getGreen() == 0.4 );
+  REQUIRE( c.getBlue() == 1.7 );
+}
+
+TEST_CASE("Adding colors", "[tuples]") {
+  Color c1(0.9, 0.6, 0.75);
+	Color c2(0.7, 0.1, 0.25);
+  REQUIRE( c1 + c2 == Color(1.6, 0.7, 1.0) );
+}
+
+TEST_CASE("Subtracting colors", "[tuples]") {
+  Color c1(0.9, 0.6, 0.75);
+	Color c2(0.7, 0.1, 0.25);
+  REQUIRE( c1 - c2 == Color(0.2, 0.5, 0.5) );
+}
+
+TEST_CASE("Multiplying a color by a scalar", "[tuples]") {
+  Color c(0.2, 0.3, 0.4);
+  REQUIRE( (BaseTuple)c * 2.0 == Color(0.4, 0.6, 0.8) );
+}
+
+// Scenario: Multiplying colors
+//   Given c1 ← color(1, 0.2, 0.4)
+//     And c2 ← color(0.9, 1, 0.1)
+//    Then c1 * c2 = color(0.9, 0.2, 0.04)
+
+TEST_CASE("Multiplying colors", "[tuples]") {
+  Color c1(1, 0.2, 0.4);
+	Color c2(0.9, 1, 0.1);
+  REQUIRE( c1 * c2 == Color(0.9, 0.2, 0.04) );
+}
